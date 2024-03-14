@@ -6,6 +6,10 @@ int main() {
   std::cout << "Введите точку отсчета: ";
   std::cin >> count_point;
   int index = binarySearch(arr, count_point);
+  if (index == -1) {
+      std::cout << "Ошибка подсчета!";
+      return -1;
+  }
   int count = arr.size() - index;
   std::cout << "Чисел больше, чем точка отсчета: " << count;
   return 0;
