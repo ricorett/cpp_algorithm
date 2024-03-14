@@ -1,3 +1,4 @@
 #include <iostream>
+#include <vector>
 
-int count_num(int count_point, int *arr);
+int binarySearch(const std::vector<int>& arr, int count_point);
