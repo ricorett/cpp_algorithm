@@ -10,14 +10,14 @@ int main() {
     if (num < 1) {
         std::cout << "n/a";
     } else {
-        std::cout << fub(num);
+        std::cout << fibonacci(num);
     }
     return 0;
 }
 
-int fub(int num) {
+int fibonacci(int num) {
     if (num == 0) return 0;
     if (num == 1) return 1;
     
-    return fub(num - 1) + fub(num - 2);
+    return fibonacci(num - 1) + fibonacci(num - 2);
 }

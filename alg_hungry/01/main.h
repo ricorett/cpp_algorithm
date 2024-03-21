@@ -1,3 +1,3 @@
 #include <iostream>
 
-int fub(int num);
+int fibonacci(int num);
