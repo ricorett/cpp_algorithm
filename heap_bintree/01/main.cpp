@@ -18,17 +18,30 @@ int main(){
 
 void print_pyramid(Heap h, int parent_index, int child_index_left, int child_index_right, int level){
     for (int i = 0; i < sizeof(h.data) / sizeof(h.data[0]); i++){
+        if (parent_index >= (sizeof(h.data)/sizeof(h.data[0]))) {
+            break;
+        }
+
         if (i == 0) {
             std::cout << level << " root " << h.root() << std::endl;
             ++level;
             parent_index = h.parent_index(i + 1);
         }
-        child_index_left = h.left_index(parent_index);
-        child_index_right = h.right_index(parent_index);
-        std::cout <<  level << " left (" << h.data[parent_index] << ") " << h.from_index(child_index_left) << std::endl;
-        std::cout <<  level << " right (" << h.data[parent_index] << ") " << h.from_index(child_index_right) << std::endl;
-        ++level;
-        ++parent_index;
+
+        if (parent_index < (sizeof(h.data)/sizeof(h.data[0]))) {
+            child_index_left = h.left_index(parent_index);
+            child_index_right = h.right_index(parent_index);
+
+            if (child_index_left < (sizeof(h.data)/sizeof(h.data[0]))) {
+                std::cout <<  level << " left (" << h.data[parent_index] << ") " << h.from_index(child_index_left) << std::endl;
+            }
+
+            if (child_index_right < (sizeof(h.data)/sizeof(h.data[0]))) {
+                std::cout <<  level << " right (" << h.data[parent_index] << ") " << h.from_index(child_index_right) << std::endl;
+            }
+
+            ++level;
+            ++parent_index;
+        }
     }
 }
-
