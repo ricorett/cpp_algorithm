@@ -1,7 +1,8 @@
 #include <iostream>
-
+#include <cstring>
 struct Heap {
     int data[6];
+
     int root(){
         return data[0];
     }
@@ -16,6 +17,9 @@ struct Heap {
     }
     int parent_index(int child_index){
         return ((child_index - 1) / 2);
+    }
+    int size(){
+        return sizeof(*data);
     }
 };
 
