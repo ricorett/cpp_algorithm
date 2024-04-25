@@ -1,5 +1,5 @@
 #include "main.h"
-#include <cstring> // Добавляем библиотеку для функции strcmp()
+#include <cstring>
 
 int main() {
     std::cout << "Исходный массив: 1 3 6 5 9 8\n";
