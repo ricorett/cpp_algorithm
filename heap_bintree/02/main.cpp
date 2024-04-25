@@ -23,16 +23,16 @@ int main() {
             current_index = root;
         }
         std::cout << "Вы находитесь здесь: ";
-        std::cout << level << " " << side << " (" << current_index << ") " << h.data[current_index] << std::endl;
+        std::cout << level << " " << side << " (" << h.data[((current_index - 1) / 2)] << ") " << h.data[current_index] << std::endl;
 
         std::cout << "Введите команду: ";
         std::cin >> command;
         if (strcmp(command, "right") == 0) {
-            child_index_right = h.right_index(current_index);
+
             if (child_index_right >= h.size()) {
                 std::cout << "Ошибка! Отсуствует правый потомок!" << std::endl;
             } else {
-                current_index = child_index_right;
+                current_index = h.right_index(current_index);
                 side = "right";
                 level++;
                 std::cout << "OK\n";
@@ -42,11 +42,11 @@ int main() {
             }
         }
         if (strcmp(command, "left") == 0) {
-            child_index_left = h.left_index(current_index);
+
             if (child_index_left >= h.size()) {
                 std::cout << "Ошибка! Отсуствует левый потомок! " << std::endl;
             } else {
-                current_index = child_index_left;
+                current_index =  h.left_index(current_index);
                 side = "left";
                 level++;
                 std::cout << "OK\n";
@@ -56,12 +56,11 @@ int main() {
             }
         }
         if (strcmp(command, "up") == 0) {
-            current_index = h.parent_index(current_index);
             if (current_index == root) {
                 std::cout << "Ошибка! Отсутствует родитель! " << std::endl;
             } else {
-
-                level--;
+                current_index = h.parent_index(current_index);
+                --level;
                 std::cout << "OK\n";
 
             }
