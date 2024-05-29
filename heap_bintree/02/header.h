@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <cassert>
+#include <unordered_map>
 
 struct Heap {
     int data[6];
@@ -40,20 +41,34 @@ struct Heap {
     }
 };
 
-void print_index(int* arr, int arr_size, int index);
+void print_index(int* arr, int arr_size, int index, Heap h);
 
 enum class Command {
     Up,
     Right,
     Left,
-    Exit
+    Exit,
+    Invalid
 };
 
 
 //Парсинг строки в перечисление, чтобы не работать со строками в основной программе
 Command ParseNextCommand(){
-//TODO...
+    static const std::unordered_map<std::string, Command> command_map = {
+            {"Up", Command::Up},
+            {"Right", Command::Right},
+            {"Left", Command::Left},
+            {"Exit", Command::Exit}
+    };
+    std::string input;
+    std::cin >> input;
 
+    auto it = command_map.find(input);
+    if (it != command_map.end()) {
+        return it->second;
+    } else {
+        return Command::Invalid;
+    }
 }
 
 
