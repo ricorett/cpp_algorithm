@@ -1,22 +1,20 @@
-#include "main.h"
-#include <cstring>
+#include "header.h"
 
 int main() {
     std::cout << "Исходный массив: 1 3 6 5 9 8\n";
     int arr[6] = {1,3,6,5,9,8};
-    int current_index = 0;
-    int child_index_left, child_index_right;
-    int level = 0;
-    const int root = 0;
     Heap h;
+    const int root = 0;
+    int current_index = 0;
+    int child_index_left = h.left_index(current_index);
+    int child_index_right = h.right_index(current_index);
+    int level = 0;
     char command[10];
     std::string side = "root";
-
     for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); ++i){
         h.data[i] = arr[i];
     }
-    std::cout << "Пирамида: " << std::endl;
-    print_pyramid(h, current_index, child_index_left, child_index_right, level);
+
     while(true) {
         if (level == 0) {
             side = "root";
@@ -72,33 +70,67 @@ int main() {
     return 0;
 }
 
-
-void print_pyramid(Heap h, int parent_index, int child_index_left, int child_index_right, int level){
-    for (int i = 0; i < sizeof(h.data) / sizeof(h.data[0]); i++){
-        if (parent_index >= (sizeof(h.data)/sizeof(h.data[0]))) {
-            break;
-        }
-
-        if (i == 0) {
-            std::cout << level << " root " << h.root() << std::endl;
-            ++level;
-            parent_index = h.parent_index(i + 1);
-        }
-
-        if (parent_index < (sizeof(h.data)/sizeof(h.data[0]))) {
-            child_index_left = h.left_index(parent_index);
-            child_index_right = h.right_index(parent_index);
-
-            if (child_index_left < (sizeof(h.data)/sizeof(h.data[0]))) {
-                std::cout <<  level << " left (" << h.data[parent_index] << ") " << h.from_index(child_index_left) << std::endl;
-            }
-
-            if (child_index_right < (sizeof(h.data)/sizeof(h.data[0]))) {
-                std::cout <<  level << " right (" << h.data[parent_index] << ") " << h.from_index(child_index_right) << std::endl;
-            }
-
-            ++level;
-            ++parent_index;
-        }
+//Обратите внимание, для печати строки мне не нужно передавать ничего кроме текущего индекса и массива. Код примерно в таком ключе:
+void print_index(int* arr, int arr_size, int index, Heap h)
+{
+    assert(index < arr_size);
+    if (index == 0)
+    {
+        std::cout << "0 root " << arr[0] << std::endl;
+        return;
     }
+    int parent_data = arr[h.parent_index(index)];
+    std::cout << Heap::pyramid_level(index)
+              << (Heap::is_left(index) ? " left" : " right")
+              << "(" << parent_data << ") "
+              << arr[index] << std::endl;
 }
+
+//void print_pyramid(Heap h, int parent_index, int child_index_left, int child_index_right, int level){
+//    for (int i = 0; i < sizeof(h.data) / sizeof(h.data[0]); i++){
+//        if (parent_index >= (sizeof(h.data)/sizeof(h.data[0]))) {
+//            break;
+//        }
+
+//        if (i == 0) {
+//            std::cout << level << " root " << h.root() << std::endl;
+//            ++level;
+//            parent_index = h.parent_index(i + 1);
+//        }
+
+//        if (parent_index < (sizeof(h.data)/sizeof(h.data[0]))) {
+//            child_index_left = h.left_index(parent_index);
+//            child_index_right = h.right_index(parent_index);
+//
+//            if (child_index_left < (sizeof(h.data)/sizeof(h.data[0]))) {
+//                std::cout <<  level << " left (" << h.data[parent_index] << ") " << h.from_index(child_index_left) << std::endl;
+//            }
+//
+//            if (child_index_right < (sizeof(h.data)/sizeof(h.data[0]))) {
+//                std::cout <<  level << " right (" << h.data[parent_index] << ") " << h.from_index(child_index_right) << std::endl;
+//            }
+//
+//            ++level;
+//            ++parent_index;
+//        }
+//    }
+//}
+
+
+
+
+//int main()
+//{
+// ввод массива
+// печать всей пирамиды в начале
+// текущий индекс для отображения = 0
+// пока можем двигаться
+// парсинг команд от пользователя
+// получение нового индекса для перемещения через вызов нужной функции по введенной команде
+// Если можем ли двигаться
+// перемещение текущего индекса
+// конец ЕСЛИ
+// конец пока
+//}
+
+
