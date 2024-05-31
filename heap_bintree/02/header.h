@@ -25,7 +25,7 @@ struct Heap {
         return sizeof(*data);
     }
     static int pyramid_level(int index) {
-        return static_cast<int>(log(index + 1));
+        return static_cast<int>(log2(index + 1));
     }
 
     static bool is_left(int index) {
@@ -61,6 +61,7 @@ Command ParseNextCommand(){
             {"Exit", Command::Exit}
     };
     std::string input;
+    std::cout << "Insert command Up, Left, Right or Exit!" << std::endl;
     std::cin >> input;
 
     auto it = command_map.find(input);

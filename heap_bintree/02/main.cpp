@@ -6,37 +6,48 @@ int main() {
     Heap h;
     const int root = 0;
     int current_index = 0;
-    int child_index_left = h.left_index(current_index);
-    int child_index_right = h.right_index(current_index);
-    int level = 0;
-    char command[10];
-    std::string side = "root";
+
+
     for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); ++i) {
         h.data[i] = arr[i];
     }
-    for (int i : arr){
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
+//    for (int i : arr){
+//        std::cout << i << " ";
+//    }
+//    std::cout << std::endl;
     while (true) {
         Command cmd = ParseNextCommand();
         switch (cmd) {
             case Command::Up:
-                //std::cout << "Moving Up" << std::endl;
-
+                if (current_index != root) {
+                    current_index = h.parent_index(current_index);
+                    print_index(arr, 6, current_index, h);
+                } else {
+                    std::cout << "Already at root" << std::endl;
+                }
                 break;
             case Command::Right:
-                //std::cout << "Moving Right" << std::endl;
+                if (h.right_index(current_index) < 6) {
+                    current_index = h.right_index(current_index);
+                    print_index(arr, 6, current_index, h);
+                } else {
+                    std::cout << "No right child" << std::endl;
+                }
                 break;
             case Command::Left:
-                //std::cout << "Moving Left" << std::endl;
+                if (h.left_index(current_index) < 6) {
+                    current_index = h.left_index(current_index);
+                    print_index(arr, 6, current_index, h);
+                } else {
+                    std::cout << "No left child" << std::endl;
+                }
                 break;
             case Command::Exit:
-                //std::cout << "Exiting" << std::endl;
+                std::cout << "Exiting" << std::endl;
                 return 0;
             case Command::Invalid:
             default:
-                //std::cout << "Invalid command" << std::endl;
+                std::cout << "Invalid command" << std::endl;
                 break;
         }
     }
