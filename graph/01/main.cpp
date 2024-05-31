@@ -1,26 +1,42 @@
-#include "main.h"
+#include "header.h"
+
 
 int main() {
-    FILE* file;
-    int N;
-    fopen("in.txt");
-    std::vector<std::vector<int>> graph;
+    std::ifstream inputFile("in.txt");
 
-    //записать значения из файла
-    fclose("in.txt");
-    std::unordered_set<int> visited;
-    dfs(graph, 0, visited);
+    if (!inputFile) {
+        std::cerr << "Ошибка открытия файла" << std::endl;
+        return 1;
+    }
+
+    int N;
+    inputFile >> N;
+
+    std::vector<std::vector<int> > adjacencyMatrix(N, std::vector<int>(N));
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            inputFile >> adjacencyMatrix[i][j];
+        }
+    }
+
+    inputFile.close();
+
+    std::vector<bool> visited(N, false);
+    DFS(0, adjacencyMatrix, visited);
 
     return 0;
 }
 
-void dfs(std::vector<std::vector<int>>& graph, int start, std::unordered_set<int>& visited) {
-    visited.insert(start);
-    std::cout << start << " ";
+void DFS(int vertex, std::vector<std::vector<int> > &adjacencyMatrix, std::vector<bool> &visited) {
 
-    for (int neighbor : graph[start]) {
-        if (visited.find(neighbor) == visited.end()) {
-            dfs(graph, neighbor, visited);
+    std::cout << vertex + 1 << " ";
+
+    visited[vertex] = true;
+
+    for (int i = 0; i < adjacencyMatrix.size(); ++i) {
+        if (adjacencyMatrix[vertex][i] == 1 && !visited[i]) {
+            DFS(i, adjacencyMatrix, visited);
         }
     }
 }
