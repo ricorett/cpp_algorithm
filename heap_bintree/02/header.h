@@ -52,7 +52,6 @@ enum class Command {
 };
 
 
-//Парсинг строки в перечисление, чтобы не работать со строками в основной программе
 Command ParseNextCommand(){
     static const std::unordered_map<std::string, Command> command_map = {
             {"Up", Command::Up},
