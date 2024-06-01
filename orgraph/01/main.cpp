@@ -1,5 +1,29 @@
 #include "header.h"
 
+int main() {
+    std::ifstream inputFile("in.txt");
+
+    if (!inputFile) {
+        std::cerr << "Ошибка открытия файла" << std::endl;
+        return 1;
+    }
+
+    int N;
+    inputFile >> N;
+
+    std::vector<std::vector<int>> adjacencyMatrix(N, std::vector<int>(N));
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            inputFile >> adjacencyMatrix[i][j];
+        }
+    }
+
+    inputFile.close();
+    printGraph(adjacencyMatrix);
+
+    return 0;
+}
 
 void printGraph(const std::vector<std::vector<int> >& adjacencyMatrix) {
     int N = adjacencyMatrix.size();
@@ -24,32 +48,4 @@ void printGraph(const std::vector<std::vector<int> >& adjacencyMatrix) {
 
         std::cout << std::endl;
     }
-}
-
-int main() {
-    std::ifstream inputFile("in.txt");
-
-    if (!inputFile) {
-        std::cerr << "Ошибка открытия файла" << std::endl;
-        return 1;
-    }
-
-    int N;
-    inputFile >> N;
-
-    std::vector<std::vector<int>> adjacencyMatrix(N, std::vector<int>(N));
-
-    // Считывание матрицы смежности
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            inputFile >> adjacencyMatrix[i][j];
-        }
-    }
-
-    inputFile.close();
-
-    // Вывод графа
-    printGraph(adjacencyMatrix);
-
-    return 0;
 }
