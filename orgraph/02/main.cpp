@@ -1,5 +1,30 @@
 #include "header.h"
 
+int main() {
+    std::ifstream inputFile("in.txt");
+
+    if (!inputFile) {
+        std::cerr << "Ошибка открытия файла" << std::endl;
+        return 1;
+    }
+
+    int N;
+    inputFile >> N;
+
+    std::vector<std::vector<int>> adjacencyMatrix(N, std::vector<int>(N));
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            inputFile >> adjacencyMatrix[i][j];
+        }
+    }
+
+    inputFile.close();
+    topologicalSort(adjacencyMatrix);
+
+    return 0;
+}
+
 void DFS(int v, const std::vector<std::vector<int> >& adjacencyMatrix, std::vector<bool>& visited, std::stack<int>& Stack) {
     visited[v] = true;
     for (int i = 0; i < adjacencyMatrix.size(); ++i) {
@@ -26,29 +51,4 @@ void topologicalSort(const std::vector<std::vector<int>>& adjacencyMatrix) {
         Stack.pop();
     }
     std::cout << std::endl;
-}
-
-int main() {
-    std::ifstream inputFile("in.txt");
-
-    if (!inputFile) {
-        std::cerr << "Ошибка открытия файла" << std::endl;
-        return 1;
-    }
-
-    int N;
-    inputFile >> N;
-
-    std::vector<std::vector<int>> adjacencyMatrix(N, std::vector<int>(N));
-
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            inputFile >> adjacencyMatrix[i][j];
-        }
-    }
-
-    inputFile.close();
-    topologicalSort(adjacencyMatrix);
-
-    return 0;
 }
